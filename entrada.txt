@@ -1,0 +1,48 @@
+S
+SAB
+ab
+S -> AB
+A -> a
+B -> b
+# -> #
+ab
+a
+#
+S
+SAB
+ab
+S -> AB
+A -> a
+B -> b
+S -> a
+# -> #
+ab
+a
+#
+
+Saída
+Instancia 1
+ab e uma palavra valida
+a nao e uma palavra valida
+
+Instancia 2
+ab e uma palavra valida
+a e uma palavra valida
+
+
+
+---------------------------------
+Teste 
+
+S
+AS
+ab
+S -> AA
+S -> AS
+S -> b
+A -> SA
+A -> AS
+A -> a
+# -> #
+abaab
+#

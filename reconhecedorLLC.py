@@ -51,7 +51,25 @@ def getNaoTerminal(simbolo):
 		if(regra[1] == simbolo):
 			lista.append(regra[0])
 			print('Encontrado: ' + regra[0] + '->' + simbolo)
+			
 	return lista
+
+def getSimbolo(simbolo):
+	print('getSimbolo')
+	lista_simbolos = []
+	for regra in regras:
+		if(regra[1] == simbolo):
+			lista_simbolos.append(regra[0])
+			print('Encontrado: ' + regra[0] + '->' + simbolo)
+			
+	return lista_simbolos
+
+def remove_repetidos(lista):
+    l = []
+    for i in lista:
+        if i not in l:
+            l.append(i)
+    return l
 
 #Percorrer o vetor de palavras para verificar cada uma delas
 iterador = 1
@@ -67,40 +85,67 @@ for palavra in palavras:
 	print('Triangulo obtido com a subtituicao dos terminais: ')
 	print(triangulo)
 
-	r= len(triangulo[0])-1
+	r= len(triangulo[0])
 	s= len(triangulo[0])
-	print(r)
-	for j in range(1,s):
+	print(' s = len(triangulo[0]) = ' + str(s) )
+	for i in range(1,s):
+		print("i = " + str(i))
 		triangulo.append([])
-		for i in range(0, r-1):
-			print('Iteracao no triangulo: ' + str(i))
-			print('triangulo[i]: ')
-			print(triangulo[j-1][i])
-			print('triangulo[i+1]: ')
-			print(triangulo[j-1][i+1])
-			simbolo = triangulo[j-1][i][0] + triangulo[j-1][i+1][0]
+		for j in range(0, s-i):
+			print('-------------------')
+			print("[ " + str(i) + " , " + str(j) + "]")
+			print('Roldana no triangulo: [' + str(j) +", "+ str(j+1)+ " ]" + str(triangulo[i-1][j]) + '---' + str(triangulo[i-1][j+1]) )
 
-			print('Simbolo: ')
-			print(simbolo)
+			lista_simbolos = []
+			for item_a in triangulo[i-1][j]:
+				
+				for item_b in triangulo[i-1][j+1]:
+					print('item_a: ' + str(item_a) + ' item_b: ' + str(item_b))
 
-			print(triangulo)
-			lista = getNaoTerminal(simbolo)
-			print('Lista obtida para ' + simbolo + ': ')
-			print(lista)
-			triangulo[j].append(lista)
 
-			#print('------------------')
-			#print( str(triangulo[0][0]))
-			#print( str(simbolo_inicial))
-			#print(str(triangulo[0][0]) == str(simbolo_inicial))
-			#print('------------------')
-		print('Triangulo apos a iteracao ' + str(j) + ': ')
-		print(triangulo)
+					simbolo = item_a + item_b
 
+					print('Simbolo: ')
+					print(simbolo)
+
+
+					lista = getSimbolo(simbolo)
+					lista_simbolos = lista_simbolos + lista
+					print('Lista obtida para ' + simbolo + ': ')
+					print(lista_simbolos)
+					
+
+					#print('------------------')
+					#print( str(triangulo[0][0]))
+					#print( str(simbolo_inicial))
+					#print(str(triangulo[0][0]) == str(simbolo_inicial))
+					#print('------------------')
+
+			if not lista_simbolos:
+				lista_simbolos.append('*')
+
+			lista_simbolos = remove_repetidos(lista_simbolos)
+			print('Lista adicionada ao triangulo')
+			print(lista_simbolos)
+			triangulo[i].append(lista_simbolos)
+
+		print('Triangulo apos a iteracao ' + str(i) + ': ')
+		rseqn = triangulo[:]
+		rseqn.reverse()
+
+		for item in rseqn:
+				print(item)
 
 	print('Triangulo gerado, caso o simpobolo inicial esteja na posicao 0 do triangulo a palavra pertence a linguagem: ')
 	print('Instancia ' + str (iterador))
-	if (triangulo[s][0][0] == simbolo_inicial):
+	print(triangulo[s-1])
+
+	pertence = False
+	for item in triangulo[s-1][0]:
+		if(item == simbolo_inicial):
+			pertence = True
+
+	if (pertence == True):
 		print( palavra + ' e uma palavra valida')
 	else:
 		print( palavra + ' nao e uma palavra valida')
