@@ -1,66 +1,13 @@
 
-regras = []
-palavras = []
-
-simbolo_inicial = raw_input()
-conjunto_nao_terminais = raw_input()
-conjunto_terminais = raw_input()
-
-cond_parada = 1
-while(cond_parada == 1):
-	regra = raw_input()
-	if (regra == '# -> #'):
-		cond_parada = 0
-	else:
-		regras.append([regra[0], regra.split("-> ")[1]])
 
 
-cond_parada = 1
-while(cond_parada == 1):
-	palavra = raw_input()
-	if (palavra == '#'):
-		cond_parada = 0
-	else:
-		palavras.append(palavra)
-
-print("Simbolo Inicial: ")
-print(simbolo_inicial)
-print("Nao terminais: ")
-print(conjunto_nao_terminais)
-print("Terminais: ")
-print(conjunto_terminais)
-print("Regras: ")
-print(regras)
-print("Palavras: ")
-print(palavras)
-
-'''def getNaoTerminal(triangulo, posicao_simbolo):
-	print('getNaoTerminal')
-	simbolo = triangulo[posicao_simbolo]
-	triangulo[posicao_simbolo] = []
-	for regra in regras:
-		if(regra[1] == triangulo[posicao_simbolo]):
-			triangulo[posicao_simbolo].append(regra[0])
-			print('Encontrado: ' + regra[0] + '->' + triangulo[posicao_simbolo])'''
-
-
-def getNaoTerminal(simbolo):
-	print('getNaoTerminal')
-	lista = []
-	for regra in regras:
-		if(regra[1] == simbolo):
-			lista.append(regra[0])
-			print('Encontrado: ' + regra[0] + '->' + simbolo)
-			
-	return lista
-
-def getSimbolo(simbolo):
-	print('getSimbolo')
+def getSimbolo(simbolo, regras):
+	#print('getSimbolo')
 	lista_simbolos = []
 	for regra in regras:
 		if(regra[1] == simbolo):
 			lista_simbolos.append(regra[0])
-			print('Encontrado: ' + regra[0] + '->' + simbolo)
+			#print('Encontrado: ' + regra[0] + '->' + simbolo)
 			
 	return lista_simbolos
 
@@ -71,83 +18,135 @@ def remove_repetidos(lista):
             l.append(i)
     return l
 
-#Percorrer o vetor de palavras para verificar cada uma delas
-iterador = 1
-for palavra in palavras:
-	triangulo = []
-	triangulo.append([])
-	for i in range(0, len(palavra)):
-		lista = getNaoTerminal(palavra[i])
-		print('Lista obtida para o terminal ' + palavra[i] + ': ')
-		print(lista)
-		triangulo[0].append(lista)
 
-	print('Triangulo obtido com a subtituicao dos terminais: ')
-	print(triangulo)
+def main():
+	iterador = 1
+	while 1:
+		regras = []
+		palavras = []
+		try:
+			simbolo_inicial = raw_input()
 
-	r= len(triangulo[0])
-	s= len(triangulo[0])
-	print(' s = len(triangulo[0]) = ' + str(s) )
-	for i in range(1,s):
-		print("i = " + str(i))
-		triangulo.append([])
-		for j in range(0, s-i):
-			print('-------------------')
-			print("[ " + str(i) + " , " + str(j) + "]")
-			print('Roldana no triangulo: [' + str(j) +", "+ str(j+1)+ " ]" + str(triangulo[i-1][j]) + '---' + str(triangulo[i-1][j+1]) )
+			conjunto_nao_terminais = raw_input()
+			conjunto_terminais = raw_input()
 
-			lista_simbolos = []
-			for item_a in triangulo[i-1][j]:
-				
-				for item_b in triangulo[i-1][j+1]:
-					print('item_a: ' + str(item_a) + ' item_b: ' + str(item_b))
+			cond_parada = 1
+			while(cond_parada == 1):
+				regra = raw_input()
+				if (regra == '# -> #'):
+					cond_parada = 0
+				else:
+					regras.append([regra[0], regra.split("-> ")[1]])
 
 
-					simbolo = item_a + item_b
+			cond_parada = 1
+			while(cond_parada == 1):
+				palavra = raw_input()
+				if (palavra == '#'):
+					cond_parada = 0
+				else:
+					palavras.append(palavra)
 
-					print('Simbolo: ')
-					print(simbolo)
+			#print("Simbolo Inicial: ")
+			#print(simbolo_inicial)
+			#print("Nao terminais: ")
+			#print(conjunto_nao_terminais)
+			#print("Terminais: ")
+			#print(conjunto_terminais)
+			#print("Regras: ")
+			#print(regras)
+			#print("Palavras: ")
+			#print(palavras)
 
 
-					lista = getSimbolo(simbolo)
-					lista_simbolos = lista_simbolos + lista
-					print('Lista obtida para ' + simbolo + ': ')
-					print(lista_simbolos)
-					
+			#Percorrer o vetor de palavras para verificar cada uma delas
+			print('\nInstancia ' + str (iterador) )
+			for palavra in palavras:
+				triangulo = []
+				triangulo.append('X')
+				triangulo.append([])
 
-					#print('------------------')
-					#print( str(triangulo[0][0]))
-					#print( str(simbolo_inicial))
-					#print(str(triangulo[0][0]) == str(simbolo_inicial))
-					#print('------------------')
+				triangulo[1].append('X')
+				for i in range(1, len(palavra)+1):
+					lista = getSimbolo(palavra[i-1],regras)
+					#print('Lista obtida para o terminal ' + palavra[i] + ': ')
+					#print(lista)
+					if not lista:
+							lista.append('*')
+					triangulo[1].append(lista)
 
-			if not lista_simbolos:
-				lista_simbolos.append('*')
+				#print('Triangulo obtido com a subtituicao dos terminais: ')
+				#print(triangulo)
 
-			lista_simbolos = remove_repetidos(lista_simbolos)
-			print('Lista adicionada ao triangulo')
-			print(lista_simbolos)
-			triangulo[i].append(lista_simbolos)
+				tamanho_palavra= len(palavra)
+				#print(' s = len(triangulo[0]) = ' + str(s) )
+				for linha in range(2,tamanho_palavra+1):
+					#print("l = " + str(linha))
+					triangulo.append([])
+					triangulo[linha].append('X')
+					#print(len(palavra))
+					for coluna in range(1, ((tamanho_palavra-linha)+2)):
+						#print("k = " + str(coluna))
+	
+						lista_simbolos = []
 
-		print('Triangulo apos a iteracao ' + str(i) + ': ')
-		rseqn = triangulo[:]
-		rseqn.reverse()
+						for aux in range(1, linha):
+							#print('L= ' + str(linha) + 'K= ' + str(coluna) + 'F= ' + str(aux))
 
-		for item in rseqn:
-				print(item)
+							for item_a in triangulo[linha-aux][coluna]:
+								
+								for item_b in triangulo[aux][(linha-aux)+coluna]:
+									#print('item_a: ' + str(item_a) + ' item_b: ' + str(item_b))
 
-	print('Triangulo gerado, caso o simpobolo inicial esteja na posicao 0 do triangulo a palavra pertence a linguagem: ')
-	print('Instancia ' + str (iterador))
-	print(triangulo[s-1])
 
-	pertence = False
-	for item in triangulo[s-1][0]:
-		if(item == simbolo_inicial):
-			pertence = True
+									simbolo = item_a + item_b
 
-	if (pertence == True):
-		print( palavra + ' e uma palavra valida')
-	else:
-		print( palavra + ' nao e uma palavra valida')
-	iterador+=1
+									#print('Simbolo: ')
+									#print(simbolo)
 
+
+									lista = getSimbolo(simbolo, regras)
+									lista_simbolos = lista_simbolos + lista
+									#print('Lista obtida para ' + simbolo + ': ')
+									#print(lista_simbolos)
+									
+
+									#print('------------------')
+									#print( str(triangulo[0][0]))
+									#print( str(simbolo_inicial))
+									#print(str(triangulo[0][0]) == str(simbolo_inicial))
+									#print('------------------')
+
+						if not lista_simbolos:
+							lista_simbolos.append('*')
+
+						lista_simbolos = remove_repetidos(lista_simbolos)
+						#print('Lista adicionada ao triangulo')
+						#print(lista_simbolos)
+						triangulo[linha].append(lista_simbolos)
+
+					#print('Triangulo apos a iteracao ' + str(i) + ': ')
+					#rseqn = triangulo[:]
+					#rseqn.reverse()
+
+					#for item in rseqn:
+						#print(item)
+
+				#print('Triangulo gerado, caso o simpobolo inicial esteja na posicao 0 do triangulo a palavra pertence a linguagem: ')
+				#print(triangulo[tamanho_palavra])
+
+				pertence = False
+				for item in triangulo[tamanho_palavra][1]:
+					if(item == simbolo_inicial):
+						pertence = True
+
+				if (pertence == True):
+					print( palavra + ' e uma palavra valida')
+				else:
+					print( palavra + ' nao e uma palavra valida')
+		except EOFError:
+			break
+		iterador+=1
+
+if __name__ == "__main__":
+	main()

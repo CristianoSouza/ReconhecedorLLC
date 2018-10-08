@@ -45,4 +45,5 @@ A -> AS
 A -> a
 # -> #
 abaab
+adaab
 #
