@@ -22,8 +22,10 @@ def remove_repetidos(lista):
 def main():
 	iterador = 1
 	while 1:
+
 		regras = []
 		palavras = []
+    
 		try:
 			simbolo_inicial = raw_input()
 
@@ -60,7 +62,7 @@ def main():
 
 
 			#Percorrer o vetor de palavras para verificar cada uma delas
-			print('\nInstancia ' + str (iterador) )
+			print('Instancia ' + str (iterador) )
 			for palavra in palavras:
 				triangulo = []
 				triangulo.append('X')
@@ -147,6 +149,7 @@ def main():
 		except EOFError:
 			break
 		iterador+=1
+		print('\n')
 
 if __name__ == "__main__":
 	main()
