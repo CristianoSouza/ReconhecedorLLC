@@ -31,11 +31,10 @@ int main() {
     int iterador_terminais, iterador_palavras;
 
     int cond_parada;
-    //while (!cin.eof() ){
+
     scanf("%s", simbolo_inicial);
     while(1){
         //ler simboloinicial, conjuntos de terminais e conjunto de não terminais em forma de string
-        //getline(cin, simbolo_inicial );
         scanf("%s", conjunto_terminais);
         scanf("%s", conjunto_nao_terminais);
         vector<string> regras_E;
@@ -44,15 +43,10 @@ int main() {
         //ler regras enquanto nao encontrar uma regra do tipo '# -> #'
         cond_parada = 1;
         while(cond_parada == 1){
-            //getline(cin, regra);
             scanf("%s -> %s", regraE, regraD );
-            //printf("%s", regraE);
-            //printf("%s", regraD);
             if( regraE[0] == '#'){ 
                 cond_parada = 0;
             } else {
-                //cout << "regraE -  " << regraE << endl;
-                //cout << "regraD -  " << regraD << endl;
                 regras_E.push_back(regraE);
                 regras_D.push_back(regraD);
             }
@@ -64,8 +58,6 @@ int main() {
             if (palavra[0] == '#'){
                 cond_parada = 0;
             } else{
-                //adiciona a palavra na lista de palavras
-                //cout << "Palavra" << palavra << endl;
                 palavras.push_back(palavra);
             }
         }
@@ -108,7 +100,7 @@ int main() {
 
                     for( int aux = 1; aux < linha; aux++) {
 
-                        //lacos de repeticao para fazer as combinacoes de simbolos em posicoes do tringulo que possuem mais de umsimbolo
+                        //lacos de repeticao para fazer as combinacoes de simbolos em posicoes do tringulo que possuem mais de um simbolo
                         for (int item1 = 0; item1 < triangulo[linha-aux][coluna].size(); item1++) {
                             for (int item2 = 0; item2 < triangulo[aux][(linha-aux)+coluna].size(); item2++) {
                                 //concatena os simbolos de duas posicoes do triangulo
